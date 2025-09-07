@@ -1,1 +1,324 @@
 
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWR302 - Yêu cầu phần mềm</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+        }
+        .section-title {
+            @apply text-3xl font-bold text-slate-800 mb-2;
+        }
+        .section-subtitle {
+            @apply text-lg text-slate-500 mb-8;
+        }
+        .card {
+            @apply bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300;
+        }
+        /* Custom timeline style */
+        .timeline-item {
+            position: relative;
+            padding-bottom: 2rem;
+            padding-left: 2.5rem;
+            border-left: 2px solid #e2e8f0; /* slate-200 */
+        }
+        .timeline-item:last-child {
+            border-left: 2px solid transparent;
+        }
+        .timeline-dot {
+            position: absolute;
+            left: -0.5rem;
+            top: 0;
+            height: 1rem;
+            width: 1rem;
+            background-color: white;
+            border: 3px solid #0ea5e9; /* sky-500 */
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-sky-500 text-white p-2 rounded-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                        </svg>
+                    </div>
+                    <h1 class="text-xl font-bold text-slate-800">SWR302</h1>
+                </div>
+                <nav class="hidden md:flex space-x-6 text-sm font-semibold text-slate-600">
+                    <a href="#overview" class="hover:text-sky-500 transition-colors">Tổng quan</a>
+                    <a href="#roadmap" class="hover:text-sky-500 transition-colors">Lộ trình</a>
+                    <a href="#assessment" class="hover:text-sky-500 transition-colors">Đánh giá</a>
+                    <a href="#resources" class="hover:text-sky-500 transition-colors">Tài liệu</a>
+                    <a href="#contact" class="hover:text-sky-500 transition-colors">Liên hệ</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="bg-white py-20 md:py-32">
+            <div class="container mx-auto px-4 text-center">
+                <p class="text-sky-500 font-semibold mb-2">Mã môn học: SWR302</p>
+                <h1 class="text-4xl md:text-6xl font-extrabold text-slate-900 leading-tight mb-4">Yêu cầu phần mềm</h1>
+                <p class="max-w-3xl mx-auto text-lg md:text-xl text-slate-600 mb-8">
+                    Nền tảng vững chắc để xây dựng các sản phẩm phần mềm thành công, đáp ứng đúng nhu cầu người dùng và mục tiêu kinh doanh.
+                </p>
+                <div class="flex justify-center space-x-4">
+                    <a href="#roadmap" class="bg-sky-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-sky-600 transition-all duration-300 shadow-lg hover:shadow-xl">Xem lộ trình học</a>
+                    <a href="#resources" class="bg-slate-100 text-slate-700 font-bold py-3 px-6 rounded-lg hover:bg-slate-200 transition-all duration-300">Tài liệu & Công cụ</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Course Details -->
+        <section id="details" class="py-16">
+            <div class="container mx-auto px-4">
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+                    <div class="card p-4">
+                        <h3 class="font-bold text-slate-800 text-lg mb-1">Số tín chỉ</h3>
+                        <p class="text-3xl font-extrabold text-sky-500">3</p>
+                    </div>
+                    <div class="card p-4">
+                        <h3 class="font-bold text-slate-800 text-lg mb-1">Thời lượng</h3>
+                        <p class="text-xl font-bold text-slate-600">20 buổi</p>
+                        <p class="text-sm text-slate-500">(~150 giờ học)</p>
+                    </div>
+                    <div class="card p-4">
+                        <h3 class="font-bold text-slate-800 text-lg mb-1">Trình độ</h3>
+                        <p class="text-xl font-bold text-slate-600">Cử nhân</p>
+                        <p class="text-sm text-slate-500">(Bachelor)</p>
+                    </div>
+                    <div class="card p-4">
+                        <h3 class="font-bold text-slate-800 text-lg mb-1">Điều kiện tiên quyết</h3>
+                        <p class="text-xl font-bold text-slate-600">SWE102/SWE201c</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Overview & Objectives Section -->
+        <section id="overview" class="py-16">
+            <div class="container mx-auto px-4">
+                <div class="text-center">
+                    <h2 class="section-title">Tổng Quan Môn Học</h2>
+                    <p class="section-subtitle">Hiểu rõ TẠI SAO cần Kỹ thuật Yêu cầu và sẽ học được GÌ.</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-12 items-start">
+                    <div>
+                        <h3 class="text-2xl font-bold text-slate-800 mb-4">Mô tả môn học (WHAT)</h3>
+                        <p class="text-slate-600 mb-4 leading-relaxed">
+                            Môn học này là một giới thiệu toàn diện về Kỹ thuật Yêu cầu (RE), cung cấp kiến thức nền tảng và các thuật ngữ chuyên ngành. Sinh viên sẽ được trang bị các kỹ thuật thiết yếu từ khơi gợi, phân tích, đặc tả cho đến đảm bảo chất lượng yêu cầu.
+                        </p>
+                        <p class="text-slate-600 mb-4 leading-relaxed">
+                           Bạn sẽ học cách làm việc với khách hàng, tài liệu hóa các loại yêu cầu khác nhau (người dùng, nghiệp vụ, chức năng, phi chức năng) và sử dụng các mô hình trực quan để minh họa chúng một cách hiệu quả.
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-slate-800 mb-4">Tại sao Kỹ thuật Yêu cầu quan trọng? (WHY)</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <svg class="h-6 w-6 text-green-500 mr-3 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <div>
+                                    <h4 class="font-semibold text-slate-700">Giảm rủi ro dự án</h4>
+                                    <p class="text-slate-600">Phát hiện sớm các vấn đề về yêu cầu giúp tiết kiệm chi phí sửa lỗi gấp nhiều lần so với sau khi triển khai.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="h-6 w-6 text-green-500 mr-3 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <div>
+                                    <h4 class="font-semibold text-slate-700">Đảm bảo sản phẩm đúng nhu cầu</h4>
+                                    <p class="text-slate-600">Xây dựng sản phẩm thực sự giải quyết được vấn đề kinh doanh và làm hài lòng người dùng.</p>
+                                </div>
+                            </li>
+                             <li class="flex items-start">
+                                <svg class="h-6 w-6 text-green-500 mr-3 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <div>
+                                    <h4 class="font-semibold text-slate-700">Nâng cao chất lượng phần mềm</h4>
+                                    <p class="text-slate-600">Quy trình yêu cầu tốt là nền tảng cho việc lập kế hoạch, thiết kế, và phát triển sản phẩm chất lượng cao.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mt-16">
+                    <h3 class="text-2xl font-bold text-slate-800 mb-6 text-center">Kết quả học tập (CLOs)</h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="card"><strong>CLO1:</strong> Hiểu rõ nguyên tắc và kỹ thuật của RE.</div>
+                        <div class="card"><strong>CLO4:</strong> Phân tích và tạo ra đặc tả hệ thống.</div>
+                        <div class="card"><strong>CLO5:</strong> Tạo các mô hình yêu cầu (domain, use-case).</div>
+                        <div class="card"><strong>CLO6:</strong> Thiết kế và lập kế hoạch giải pháp hướng đối tượng.</div>
+                        <div class="card"><strong>CLO7:</strong> Chuẩn bị và trình bày báo cáo kỹ thuật.</div>
+                        <div class="card"><strong>CLO8 & 9:</strong> Giảm rủi ro bằng prototyping và quản lý yêu cầu.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Course Roadmap -->
+        <section id="roadmap" class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center">
+                    <h2 class="section-title">Lộ Trình Môn Học</h2>
+                    <p class="section-subtitle">Hành trình 10 tuần chinh phục Kỹ thuật Yêu cầu phần mềm.</p>
+                </div>
+                
+                <div class="max-w-4xl mx-auto">
+                    <!-- Timeline Start -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <p class="text-sm text-slate-500 font-medium">Tuần 1-2 (09/09 - 19/09)</p>
+                        <h4 class="font-bold text-slate-700 mt-1">Nền tảng và Khái niệm cốt lõi</h4>
+                        <p class="text-slate-600 mt-2">Giới thiệu môn học, yêu cầu thiết yếu, góc nhìn khách hàng và vai trò của Business Analyst (BA).</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <p class="text-sm text-slate-500 font-medium">Tuần 3-4 (23/09 - 03/10)</p>
+                        <h4 class="font-bold text-slate-700 mt-1">Khơi gợi và Hiểu yêu cầu</h4>
+                        <p class="text-slate-600 mt-2">Xác định yêu cầu nghiệp vụ (Vision & Scope), tìm kiếm tiếng nói người dùng, các kỹ thuật khơi gợi, Use Cases và User Stories. <span class="font-semibold text-sky-600">Kiểm tra Tiến độ 1.</span></p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <p class="text-sm text-slate-500 font-medium">Tuần 5-6 (07/10 - 17/10)</p>
+                        <h4 class="font-bold text-slate-700 mt-1">Tài liệu hóa và Mô hình hóa</h4>
+                        <p class="text-slate-600 mt-2">Quy tắc nghiệp vụ, viết đặc tả yêu cầu phần mềm (SRS), và các kỹ thuật mô hình hóa trực quan (Data Flow, Swimlane, State-transition...).</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <p class="text-sm text-slate-500 font-medium">Tuần 7-8 (21/10 - 31/10)</p>
+                        <h4 class="font-bold text-slate-700 mt-1">Đảm bảo chất lượng và Rủi ro</h4>
+                        <p class="text-slate-600 mt-2">Yêu cầu phi chức năng, giảm thiểu rủi ro qua Prototyping, ưu tiên và xác nhận yêu cầu. <span class="font-semibold text-sky-600">Trình bày LAB & Kiểm tra Tiến độ 2.</span></p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <p class="text-sm text-slate-500 font-medium">Tuần 9-10 (04/11 - 13/11)</p>
+                        <h4 class="font-bold text-slate-700 mt-1">Quản lý và Áp dụng thực tế</h4>
+                        <p class="text-slate-600 mt-2">Áp dụng RE trong các dự án (Agile, thuê ngoài...), quản lý sự thay đổi, truy vết yêu cầu và ôn tập cuối kỳ. <span class="font-semibold text-sky-600">Kiểm tra Tiến độ 3.</span></p>
+                    </div>
+                    <!-- Timeline End -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Assessment Section -->
+        <section id="assessment" class="py-16">
+            <div class="container mx-auto px-4">
+                <div class="text-center">
+                    <h2 class="section-title">Đánh Giá & Thang Điểm</h2>
+                    <p class="section-subtitle">Cách bạn sẽ được đánh giá trong suốt môn học.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
+                    <div class="card lg:col-span-2">
+                        <h4 class="font-bold text-lg text-slate-800">Bài tập lớn (Assignment)</h4>
+                        <p class="text-3xl font-extrabold text-sky-500 mt-2">20%</p>
+                        <p class="text-slate-500 mt-2">Thực hành toàn bộ quy trình RE qua một dự án thực tế.</p>
+                    </div>
+                     <div class="card">
+                        <h4 class="font-bold text-lg text-slate-800">Bài tập LAB</h4>
+                        <p class="text-3xl font-extrabold text-sky-500 mt-2">10%</p>
+                        <p class="text-slate-500 mt-2">Vẽ các sơ đồ và trình bày vào tuần 7.</p>
+                    </div>
+                    <div class="card lg:col-span-2">
+                        <h4 class="font-bold text-lg text-slate-800">Kiểm tra Tiến độ</h4>
+                        <p class="text-3xl font-extrabold text-sky-500 mt-2">20%</p>
+                        <p class="text-slate-500 mt-2">3 bài kiểm tra trắc nghiệm xuyên suốt quá trình học.</p>
+                    </div>
+                    <div class="card lg:col-span-5 grid md:grid-cols-2 gap-6 bg-slate-800 text-white p-8">
+                        <div>
+                           <h4 class="font-bold text-lg">Thi Thực hành cuối kỳ (PE)</h4>
+                           <p class="text-3xl font-extrabold text-sky-400 mt-2">25%</p>
+                           <p class="text-slate-300 mt-2">90 phút, dựa trên bài tập lớn hoặc các dự án đã học.</p>
+                        </div>
+                        <div>
+                           <h4 class="font-bold text-lg">Thi Lý thuyết cuối kỳ (TE)</h4>
+                           <p class="text-3xl font-extrabold text-sky-400 mt-2">25%</p>
+                           <p class="text-slate-300 mt-2">Kiến thức toàn bộ môn học.</p>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-center mt-8 text-slate-600 font-medium">Điều kiện qua môn: Điểm trung bình tối thiểu là 5.</p>
+            </div>
+        </section>
+
+        <!-- Resources & Tools -->
+        <section id="resources" class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center">
+                    <h2 class="section-title">Tài Liệu & Công Cụ</h2>
+                    <p class="section-subtitle">Những nguồn tài nguyên cần thiết cho môn học.</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="card">
+                        <h4 class="font-bold text-lg text-slate-800 mb-2">Sách giáo trình</h4>
+                        <p class="text-slate-600">"Software Requirements, Third Edition" của Karl E. Wiegers và Joy Beatty.</p>
+                    </div>
+                    <div class="card">
+                        <h4 class="font-bold text-lg text-slate-800 mb-2">Tài liệu bổ sung</h4>
+                        <p class="text-slate-600">Slides bài giảng, các biểu mẫu (templates) và tài liệu tham khảo khác sẽ được cung cấp trên LMS.</p>
+                    </div>
+                    <div class="card md:col-span-2 lg:col-span-1">
+                        <h4 class="font-bold text-lg text-slate-800 mb-2">Công cụ phần mềm</h4>
+                        <ul class="list-disc list-inside text-slate-600 space-y-1">
+                            <li>Microsoft Office</li>
+                            <li>Visual Paradigm (Vẽ UML)</li>
+                            <li>BOUML (Vẽ UML)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section id="contact" class="py-16">
+            <div class="container mx-auto px-4 text-center">
+                 <h2 class="section-title">Liên Hệ & Hỗ Trợ</h2>
+                 <p class="section-subtitle">Đừng ngần ngại liên hệ khi bạn cần trợ giúp.</p>
+                 <div class="card max-w-lg mx-auto">
+                    <h3 class="text-xl font-bold text-slate-800">[Tên Giảng viên]</h3>
+                    <p class="text-slate-600 mt-2">Email: <a href="mailto:[Email giảng viên]" class="text-sky-500 hover:underline">[Email giảng viên]</a></p>
+                    <p class="text-slate-600 mt-1">Giờ hỗ trợ: [Thời gian/Địa điểm hỗ trợ]</p>
+                    <p class="mt-4 text-sm text-slate-500">Mọi thông tin chi tiết và tài liệu sẽ được cập nhật trên <a href="https://flm.fpt.edu.vn/" target="_blank" class="font-semibold text-sky-500 hover:underline">flm.fpt.edu.vn</a></p>
+                 </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800 text-slate-400 py-8">
+        <div class="container mx-auto px-4 text-center text-sm">
+            <p>&copy; [Học kỳ hiện tại] - Môn học SWR302: Yêu cầu phần mềm.</p>
+            <p>Trang web này được tạo ra nhằm mục đích cung cấp thông tin cho sinh viên.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
