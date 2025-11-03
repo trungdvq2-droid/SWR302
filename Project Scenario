@@ -1,0 +1,17 @@
+# Context:
+In fact, when developing a new software, the software development team must describe the software requirements 
+in software requirements specification before they do the design and coding. 
+They describe the software requirements by using text, formulas, drawing models and table description.
+
+# Project Scenario: FPTU Connect Portal
+The FPT University Student Affairs Office wants to develop a new centralized system named "FPTU Connect Portal". 
+This portal will help students discover, join, and manage activities for all university-recognized clubs 
+(e.g., F-Code, F-Music, Vovinam). Currently, club management is fragmented, using spreadsheets for members and social media for promotion.
+
+The FPTU Connect Portal needs to have many functions. It must allow students to sign in (using @fpt.edu.vn email accounts), 
+browse the list of clubs, search for upcoming events, join a club, and register for an event. 
+It must allow Club Presidents to manage their club's profile, approve new members, 
+create new events, and track event attendance. 
+It must also allow Faculty Advisors to approve new club applications and approve major events. 
+The system must integrate with the FAP system to verify that a user is an active student. 
+Use case approach is one of the most effective ways to describe the software requirements.
