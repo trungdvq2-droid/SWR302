@@ -1,331 +1,1020 @@
-
 <!DOCTYPE html>
-<html lang="vi" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SWR302 - Yêu cầu phần mềm</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>SWR302: Software Requirements</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-primary: #32A8C6;
+            --color-primary-hover: #2a8fa6;
+            --color-primary-dark: #1f6a7a;
+            --color-bg: #f5f7f9;
+            --color-surface: #ffffff;
+            --color-text: #1a2332;
+            --color-text-light: #626b7a;
+            --color-border: #e0e6ed;
+            --color-accent-blue: #3498db;
+            --color-accent-green: #2ecc71;
+            --color-accent-red: #e74c3c;
+            --color-accent-orange: #f39c12;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8fafc; /* slate-50 */
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--color-text);
+            background-color: var(--color-bg);
         }
-        .section-title {
-            @apply text-3xl font-bold text-slate-800 mb-2;
-        }
-        .section-subtitle {
-            @apply text-lg text-slate-500 mb-8;
-        }
-        .card {
-            @apply bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300;
-        }
-        /* Custom timeline style */
-        .timeline-item {
-            position: relative;
-            padding-bottom: 2rem;
-            padding-left: 2.5rem;
-            border-left: 2px solid #e2e8f0; /* slate-200 */
-        }
-        .timeline-item:last-child {
-            border-left: 2px solid transparent;
-        }
-        .timeline-dot {
-            position: absolute;
-            left: -0.5rem;
+
+        /* Navigation */
+        nav {
+            position: sticky;
             top: 0;
-            height: 1rem;
-            width: 1rem;
-            background-color: white;
-            border: 3px solid #0ea5e9; /* sky-500 */
-            border-radius: 50%;
+            background: var(--color-surface);
+            border-bottom: 1px solid var(--color-border);
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .nav-logo {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--color-text-light);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            color: var(--color-primary);
+        }
+
+        #languageSelect {
+            padding: 8px 12px;
+            border-radius: 4px;
+            border: 1px solid var(--color-border);
+            background: var(--color-surface);
+            cursor: pointer;
+            font-weight: 500;
+            font-family: inherit;
+        }
+
+        /* Video section */
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            aspect-ratio: 16 / 9;
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Phase cards detail */
+        .phase-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .phase-card {
+            background: var(--color-surface);
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 4px solid var(--color-primary);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .phase-card.phase-1 {
+            border-left-color: #3498db;
+            background: rgba(52, 152, 219, 0.03);
+        }
+
+        .phase-card.phase-2 {
+            border-left-color: #2ecc71;
+            background: rgba(46, 204, 113, 0.03);
+        }
+
+        .phase-card.phase-3 {
+            border-left-color: #e74c3c;
+            background: rgba(231, 76, 60, 0.03);
+        }
+
+        .phase-card h3 {
+            color: var(--color-primary);
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .phase-card .phase-period {
+            font-size: 12px;
+            color: var(--color-text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .phase-card .modules-list {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .phase-card .modules-list li {
+            font-size: 14px;
+            color: var(--color-text);
+            margin-bottom: 8px;
+            list-style: disc;
+        }
+
+        .phase-card .deliverables {
+            background: rgba(0,0,0,0.02);
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            color: var(--color-text-light);
+            margin-top: 12px;
+        }
+
+        .phase-card .deliverables strong {
+            color: var(--color-text);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--color-primary) 0%, #1f6a7a 100%);
+            color: white;
+            padding: 80px 40px;
+            text-align: center;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 40px;
+            opacity: 0.95;
+            max-width: 600px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--color-primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Phase Indicator */
+        .phase-indicator {
+            background: var(--color-surface);
+            border-bottom: 1px solid var(--color-border);
+            padding: 30px 40px;
+            margin-bottom: 40px;
+        }
+
+        .phase-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .phase-info h2 {
+            color: var(--color-primary);
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        .phase-info p {
+            color: var(--color-text-light);
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            background: var(--color-border);
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            background: var(--color-primary);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            font-size: 14px;
+            color: var(--color-text-light);
+        }
+
+        /* Info Cards */
+        .info-cards {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 0 40px 40px;
+        }
+
+        .info-card {
+            background: var(--color-surface);
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 4px solid var(--color-primary);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .info-card h3 {
+            color: var(--color-primary);
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .info-card p {
+            color: var(--color-text);
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .info-card .label {
+            color: var(--color-text-light);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        section {
+            padding: 60px 40px;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        section h2 {
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: var(--color-text);
+            text-align: center;
+        }
+
+        /* Learning Outcomes Grid */
+        .outcomes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .outcome-item {
+            background: var(--color-surface);
+            padding: 20px;
+            border-radius: 8px;
+            border-top: 3px solid var(--color-primary);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .outcome-item h4 {
+            color: var(--color-primary);
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .outcome-item p {
+            font-size: 14px;
+            color: var(--color-text-light);
+            margin-bottom: 5px;
+        }
+
+        /* Assessment Structure */
+        .assessment-visual {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .assessment-item {
+            background: var(--color-surface);
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .assessment-item.tests {
+            border-top: 4px solid var(--color-accent-blue);
+        }
+
+        .assessment-item.assignments {
+            border-top: 4px solid var(--color-accent-green);
+        }
+
+        .assessment-item.exam {
+            border-top: 4px solid var(--color-accent-red);
+        }
+
+        .assessment-percent {
+            font-size: 36px;
+            font-weight: 700;
+            margin: 15px 0;
+        }
+
+        .assessment-tests .assessment-percent {
+            color: var(--color-accent-blue);
+        }
+
+        .assessment-assignments .assessment-percent {
+            color: var(--color-accent-green);
+        }
+
+        .assessment-exam .assessment-percent {
+            color: var(--color-accent-red);
+        }
+
+        /* Master Schedule */
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .week-cell {
+            background: var(--color-surface);
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            border: 1px solid var(--color-border);
+            font-size: 13px;
+        }
+
+        .week-cell.header {
+            background: var(--color-primary);
+            color: white;
+            font-weight: 600;
+            border: none;
+        }
+
+        .week-cell.active {
+            background: var(--color-accent-green);
+            color: white;
+            font-weight: 600;
+            border: none;
+        }
+
+        .week-cell.break {
+            background: #f0f0f0;
+            color: var(--color-text-light);
+            font-style: italic;
+        }
+
+        /* Timeline */
+        .timeline {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .timeline-item {
+            background: var(--color-surface);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--color-primary);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .timeline-item.current {
+            border-left-color: var(--color-accent-green);
+            background: rgba(46, 204, 113, 0.05);
+        }
+
+        .timeline-item h4 {
+            color: var(--color-primary);
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .timeline-item .date {
+            font-size: 12px;
+            color: var(--color-text-light);
+            margin-bottom: 10px;
+        }
+
+        /* Resources Section */
+        .resource-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .resource-card {
+            background: var(--color-surface);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .resource-card h3 {
+            color: var(--color-primary);
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .resource-card p {
+            color: var(--color-text-light);
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .resource-card a {
+            color: var(--color-primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .resource-card a:hover {
+            text-decoration: underline;
+        }
+
+        /* Video card full width */
+        .video-card {
+            grid-column: 1 / -1;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--color-text);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav {
+                padding: 0 20px;
+                height: 60px;
+            }
+
+            .nav-links {
+                gap: 15px;
+                font-size: 14px;
+            }
+
+            .hero {
+                padding: 40px 20px;
+                min-height: 350px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .phase-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .info-cards {
+                grid-template-columns: 1fr;
+                padding: 0 20px 20px;
+            }
+
+            section {
+                padding: 40px 20px;
+            }
+
+            section h2 {
+                font-size: 24px;
+            }
+
+            .assessment-visual {
+                grid-template-columns: 1fr;
+            }
+
+            .outcomes-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .schedule-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            }
         }
     </style>
 </head>
-<body class="antialiased">
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="#" class="nav-logo">SWR302</a>
+        <ul class="nav-links">
+            <li><a onclick="scrollTo('schedule')"><span lang="en">Schedule</span><span lang="vi" style="display: none;">Lịch Học</span></a></li>
+            <li><a onclick="scrollTo('outcomes')"><span lang="en">Outcomes</span><span lang="vi" style="display: none;">Kết Quả</span></a></li>
+            <li><a onclick="scrollTo('assessment')"><span lang="en">Assessment</span><span lang="vi" style="display: none;">Đánh Giá</span></a></li>
+            <li><a onclick="scrollTo('resources')"><span lang="en">Resources</span><span lang="vi" style="display: none;">Tài Liệu</span></a></li>
+            <li>
+                <select id="languageSelect" onchange="changeLanguage(this.value)">
+                    <option value="en">English</option>
+                    <option value="vi">Tiếng Việt</option>
+                </select>
+            </li>
+        </ul>
+    </nav>
 
-    <!-- Header -->
-    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
-        <div class="container mx-auto px-4">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center space-x-3">
-                    <div class="bg-sky-500 text-white p-2 rounded-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-                        </svg>
-                    </div>
-                    <h1 class="text-xl font-bold text-slate-800">SWR302</h1>
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>🎓 SWR302: Software Requirements</h1>
+        <p><span lang="en">Master the art and science of capturing, documenting, and managing software requirements</span><span lang="vi" style="display: none;">Làm chủ nghệ thuật và khoa học nắm bắt, tài liệu hóa và quản lý yêu cầu phần mềm</span></p>
+        <div class="hero-buttons">
+            <a href="https://lms-hcm.fpt.edu.vn/" class="btn btn-primary"><span lang="en">Access LMS</span><span lang="vi" style="display: none;">Truy Cập LMS</span></a>
+            <a href="https://github.com/doit-now/software-requirements" class="btn btn-secondary"><span lang="en">View GitHub</span><span lang="vi" style="display: none;">Xem GitHub</span></a>
+        </div>
+    </div>
+
+    <!-- Phase Indicator -->
+    <div class="phase-indicator">
+        <div class="phase-content">
+            <div class="phase-info">
+                <h2>📍 <span lang="en">Current Status</span><span lang="vi" style="display: none;">Trạng Thái Hiện Tại</span></h2>
+                <p><strong><span lang="en">Date:</span><span lang="vi" style="display: none;">Ngày:</span></strong> January 4, 2026</p>
+                <p><strong><span lang="en">Phase:</span><span lang="vi" style="display: none;">Giai đoạn:</span></strong> <span lang="en">Pre-Course (Preparation)</span><span lang="vi" style="display: none;">Chuẩn bị Trước Khóa (Chuẩn bị)</span></p>
+                <p><strong><span lang="en">Status:</span><span lang="vi" style="display: none;">Trạng thái:</span></strong> <span lang="en">Ready to Launch ✅</span><span lang="vi" style="display: none;">Sẵn Sàng Bắt Đầu ✅</span></p>
+                <p style="color: var(--color-accent-green); font-weight: 700; font-size: 18px;"><span lang="en">Course starts January 5, 2026</span><span lang="vi" style="display: none;">Khóa học bắt đầu 5 Tháng 1, 2026</span></p>
+            </div>
+            <div>
+                <h3 style="margin-bottom: 15px; color: var(--color-primary);"><span lang="en">Progress to Course Launch</span><span lang="vi" style="display: none;">Tiến độ đến khi Khóa học bắt đầu</span></h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 0%;"></div>
                 </div>
-                <nav class="hidden md:flex space-x-6 text-sm font-semibold text-slate-600">
-                    <a href="#overview" class="hover:text-sky-500 transition-colors">Tổng quan</a>
-                    <a href="#roadmap" class="hover:text-sky-500 transition-colors">Lộ trình</a>
-                    <a href="#assessment" class="hover:text-sky-500 transition-colors">Đánh giá</a>
-                    <a href="#resources" class="hover:text-sky-500 transition-colors">Tài liệu</a>
-                    <a href="#contact" class="hover:text-sky-500 transition-colors">Liên hệ</a>
-                </nav>
+                <div class="progress-text"><span lang="en">0% Complete - Preparation Phase</span><span lang="vi" style="display: none;">0% Hoàn thành - Giai đoạn Chuẩn bị</span></div>
             </div>
         </div>
-    </header>
+    </div>
 
-    <main>
-        <!-- Hero Section -->
-        <section class="bg-white py-20 md:py-32">
-            <div class="container mx-auto px-4 text-center">
-                <p class="text-sky-500 font-semibold mb-2">Mã môn học: SWR302</p>
-                <h1 class="text-4xl md:text-6xl font-extrabold text-slate-900 leading-tight mb-4">Yêu cầu phần mềm</h1>
-                <p class="max-w-3xl mx-auto text-lg md:text-xl text-slate-600 mb-8">
-                    Nền tảng vững chắc để xây dựng các sản phẩm phần mềm thành công, đáp ứng đúng nhu cầu người dùng và mục tiêu kinh doanh.
+    <!-- Info Cards -->
+    <div class="info-cards">
+        <div class="info-card">
+            <div class="label"><span lang="en">Credits</span><span lang="vi" style="display: none;">Tín Chỉ</span></div>
+            <h3><span lang="en">Academic Value</span><span lang="vi" style="display: none;">Giá Trị Học Tập</span></h3>
+            <p><span lang="en">3 Credits (Bachelor)</span><span lang="vi" style="display: none;">3 Tín Chỉ (Đại học)</span></p>
+        </div>
+        <div class="info-card">
+            <div class="label"><span lang="en">Instructor</span><span lang="vi" style="display: none;">Giảng Viên</span></div>
+            <h3><span lang="en">Course Lead</span><span lang="vi" style="display: none;">Người Dạy</span></h3>
+            <p>TrungDVQ2</p>
+        </div>
+        <div class="info-card">
+            <div class="label"><span lang="en">Schedule</span><span lang="vi" style="display: none;">Lịch Học</span></div>
+            <h3><span lang="en">Meeting Times</span><span lang="vi" style="display: none;">Giờ Học</span></h3>
+            <p><span lang="en">Monday & Thursday, Slot 1 (90 min)</span><span lang="vi" style="display: none;">Thứ 2 & Thứ 5, Buổi 1 (90 phút)</span></p>
+        </div>
+        <div class="info-card">
+            <div class="label"><span lang="en">Duration</span><span lang="vi" style="display: none;">Thời Hạn</span></div>
+            <h3><span lang="en">Course Length</span><span lang="vi" style="display: none;">Độ Dài Khóa</span></h3>
+            <p><span lang="en">11 Weeks (Jan 5 - Mar 26)</span><span lang="vi" style="display: none;">11 Tuần (5 Tháng 1 - 26 Tháng 3)</span></p>
+        </div>
+    </div>
+
+    <!-- Learning Outcomes -->
+    <section id="outcomes">
+        <h2>🎯 <span lang="en">Learning Outcomes</span><span lang="vi" style="display: none;">Kết Quả Học Tập</span></h2>
+        <p style="text-align: center; color: var(--color-text-light); margin-bottom: 30px;"><span lang="en">By completing this course, you will be able to:</span><span lang="vi" style="display: none;">Sau khi hoàn thành khóa học này, bạn sẽ có thể:</span></p>
+        <div class="outcomes-grid">
+            <div class="outcome-item">
+                <h4>1. <span lang="en">ELICIT REQUIREMENTS</span><span lang="vi" style="display: none;">THU THẬP YÊU CẦU</span></h4>
+                <p><span lang="en">Apply various elicitation techniques to gather software requirements</span><span lang="vi" style="display: none;">Áp dụng các kỹ thuật thu thập khác nhau để tập hợp yêu cầu phần mềm</span></p>
+            </div>
+            <div class="outcome-item">
+                <h4>2. <span lang="en">ANALYZE REQUIREMENTS</span><span lang="vi" style="display: none;">PHÂN TÍCH YÊU CẦU</span></h4>
+                <p><span lang="en">Analyze and prioritize conflicting requirements</span><span lang="vi" style="display: none;">Phân tích và ưu tiên các yêu cầu xung đột</span></p>
+            </div>
+            <div class="outcome-item">
+                <h4>3. <span lang="en">DOCUMENT SRS</span><span lang="vi" style="display: none;">TÀI LIỆU HÓA SRS</span></h4>
+                <p><span lang="en">Write clear and precise Software Requirements Specifications</span><span lang="vi" style="display: none;">Viết các Đặc tả Yêu cầu Phần mềm rõ ràng và chính xác</span></p>
+            </div>
+            <div class="outcome-item">
+                <h4>4. <span lang="en">CREATE MODELS</span><span lang="vi" style="display: none;">TẠO MÔ HÌNH</span></h4>
+                <p><span lang="en">Use standard models to represent requirements (DFD, Use Cases, State Diagrams)</span><span lang="vi" style="display: none;">Sử dụng các mô hình tiêu chuẩn để biểu diễn yêu cầu (DFD, Use Cases, Sơ đồ Trạng thái)</span></p>
+            </div>
+            <div class="outcome-item">
+                <h4>5. <span lang="en">MANAGE REQUIREMENTS</span><span lang="vi" style="display: none;">QUẢN LÝ YÊU CẦU</span></h4>
+                <p><span lang="en">Implement requirements management processes and tools</span><span lang="vi" style="display: none;">Triển khai các quy trình quản lý yêu cầu và công cụ</span></p>
+            </div>
+            <div class="outcome-item">
+                <h4>6. <span lang="en">HANDLE CHANGE</span><span lang="vi" style="display: none;">XỬ LÝ THAY ĐỔI</span></h4>
+                <p><span lang="en">Manage requirements changes through formal change control processes</span><span lang="vi" style="display: none;">Quản lý các thay đổi yêu cầu thông qua các quy trình kiểm soát thay đổi chính thức</span></p>
+            </div>
+            <div class="outcome-item">
+                <h4>7. <span lang="en">TRACE REQUIREMENTS</span><span lang="vi" style="display: none;">TRUY XUẤT YÊU CẦU</span></h4>
+                <p><span lang="en">Create and maintain requirements traceability matrices</span><span lang="vi" style="display: none;">Tạo và duy trì các ma trận truy xuất yêu cầu</span></p>
+            </div>
+            <div class="outcome-item">
+                <h4>8. <span lang="en">ASSESS QUALITY</span><span lang="vi" style="display: none;">ĐÁNH GIÁ CHẤT LƯỢNG</span></h4>
+                <p><span lang="en">Evaluate and ensure quality attributes and acceptance criteria</span><span lang="vi" style="display: none;">Đánh giá và đảm bảo các thuộc tính chất lượng và tiêu chí chấp nhận</span></p>
+            </div>
+            <div class="outcome-item">
+                <h4>9. <span lang="en">TAILOR REQUIREMENTS</span><span lang="vi" style="display: none;">ĐIỀU CHỈNH YÊU CẦU</span></h4>
+                <p><span lang="en">Adapt requirements practices for different project types and methodologies</span><span lang="vi" style="display: none;">Điều chỉnh các thực hành yêu cầu cho các loại dự án và phương pháp luận khác nhau</span></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Assessment Structure -->
+    <section id="assessment">
+        <h2>📊 <span lang="en">Assessment Structure</span><span lang="vi" style="display: none;">Cấu Trúc Đánh Giá</span></h2>
+        <div class="assessment-visual">
+            <div class="assessment-item tests">
+                <h3><span lang="en">Progress Tests</span><span lang="vi" style="display: none;">Kiểm Tra Tiến Độ</span></h3>
+                <div class="assessment-percent">30%</div>
+                <p style="color: var(--color-text-light);"><span lang="en">3 tests throughout the course</span><span lang="vi" style="display: none;">3 bài kiểm tra trong khóa học</span></p>
+            </div>
+            <div class="assessment-item assignments">
+                <h3><span lang="en">Assignments</span><span lang="vi" style="display: none;">Bài Tập</span></h3>
+                <div class="assessment-percent">30%</div>
+                <p style="color: var(--color-text-light);"><span lang="en">2 major projects</span><span lang="vi" style="display: none;">2 dự án lớn</span></p>
+            </div>
+            <div class="assessment-item exam">
+                <h3><span lang="en">Final Exam</span><span lang="vi" style="display: none;">Kỳ Thi Cuối</span></h3>
+                <div class="assessment-percent">40%</div>
+                <p style="color: var(--color-text-light);"><span lang="en">Comprehensive assessment</span><span lang="vi" style="display: none;">Đánh giá toàn diện</span></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Master Schedule -->
+    <section id="schedule">
+        <h2>📅 <span lang="en">Master Schedule - Course Phases</span><span lang="vi" style="display: none;">Lịch Chủ Đạo - Các Giai Đoạn Khóa Học</span></h2>
+        <p style="text-align: center; color: var(--color-text-light); margin-bottom: 30px;">
+            <span lang="en">Understand each phase duration, modules, and deliverables</span>
+            <span lang="vi" style="display: none;">Hiểu rõ từng giai đoạn - khoảng thời gian, môn học, và yêu cầu</span>
+        </p>
+
+        <!-- Phase Details -->
+        <div class="phase-details">
+            <!-- Phase 1 -->
+            <div class="phase-card phase-1">
+                <h3>🏗️ <span lang="en">PHASE 1: FOUNDATION</span><span lang="vi" style="display: none;">GIAI ĐOẠN 1: NỀN TẢNG</span></h3>
+                <div class="phase-period">
+                    <span lang="en">Weeks 1-5 | Jan 5 - Feb 5, 2026</span>
+                    <span lang="vi" style="display: none;">Tuần 1-5 | 5 Tháng 1 - 5 Tháng 2, 2026</span>
+                </div>
+                <p style="margin-bottom: 15px; color: var(--color-text-light);">
+                    <strong><span lang="en">Focus:</span><span lang="vi" style="display: none;">Tập trung:</span></strong> <span lang="en">Learn requirements fundamentals and core concepts</span><span lang="vi" style="display: none;">Học nền tảng và các khái niệm cơ bản về yêu cầu</span>
                 </p>
-                <div class="flex justify-center space-x-4">
-                    <a href="#roadmap" class="bg-sky-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-sky-600 transition-all duration-300 shadow-lg hover:shadow-xl">Xem lộ trình học</a>
-                    <a href="#resources" class="bg-slate-100 text-slate-700 font-bold py-3 px-6 rounded-lg hover:bg-slate-200 transition-all duration-300">Tài liệu & Công cụ</a>
+                <div>
+                    <strong style="color: var(--color-text);">
+                        <span lang="en">📚 Chapters 1-17:</span>
+                        <span lang="vi" style="display: none;">📚 Chương 1-17:</span>
+                    </strong>
+                    <ul class="modules-list">
+                        <li><span lang="en">Requirements Essentials & Customer Perspectives</span><span lang="vi" style="display: none;">Những điều cơ bản về Yêu cầu & Quan điểm Khách hàng</span></li>
+                        <li><span lang="en">Good Practices & Business Analyst Role</span><span lang="vi" style="display: none;">Thực hành Tốt & Vai trò Nhà Phân tích Kinh doanh</span></li>
+                        <li><span lang="en">Elicitation Techniques (5+ methods)</span><span lang="vi" style="display: none;">Kỹ thuật Thu thập Yêu cầu (5+ phương pháp)</span></li>
+                        <li><span lang="en">Use Cases & Software Requirements Specification</span><span lang="vi" style="display: none;">Trường hợp Sử dụng & Đặc tả Yêu cầu Phần mềm</span></li>
+                        <li><span lang="en">System Modeling (DFD, Swimlane, State Diagrams)</span><span lang="vi" style="display: none;">Mô hình Hệ thống (DFD, Swimlane, Sơ đồ Trạng thái)</span></li>
+                    </ul>
+                </div>
+                <div class="deliverables">
+                    <strong><span lang="en">✓ Deliverables:</span><span lang="vi" style="display: none;">✓ Yêu cầu giao:</span></strong><br>
+                    <span lang="en">Progress Test 1 • Assignment 1 (Part A) • Practice Exercises</span>
+                    <span lang="vi" style="display: none;">Kiểm tra Tiến độ 1 • Bài tập 1 (Phần A) • Bài tập Thực hành</span>
                 </div>
             </div>
-        </section>
 
-        <!-- Course Details -->
-        <section id="details" class="py-16">
-            <div class="container mx-auto px-4">
-                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
-                    <div class="card p-4">
-                        <h3 class="font-bold text-slate-800 text-lg mb-1">Số tín chỉ</h3>
-                        <p class="text-3xl font-extrabold text-sky-500">3</p>
-                    </div>
-                    <div class="card p-4">
-                        <h3 class="font-bold text-slate-800 text-lg mb-1">Thời lượng</h3>
-                        <p class="text-xl font-bold text-slate-600">20 buổi</p>
-                        <p class="text-sm text-slate-500">(~150 giờ học)</p>
-                    </div>
-                    <div class="card p-4">
-                        <h3 class="font-bold text-slate-800 text-lg mb-1">Trình độ</h3>
-                        <p class="text-xl font-bold text-slate-600">Cử nhân</p>
-                        <p class="text-sm text-slate-500">(Bachelor)</p>
-                    </div>
-                    <div class="card p-4">
-                        <h3 class="font-bold text-slate-800 text-lg mb-1">Điều kiện tiên quyết</h3>
-                        <p class="text-xl font-bold text-slate-600">SWE102/SWE201c</p>
-                    </div>
+            <!-- Phase 2 -->
+            <div class="phase-card phase-2">
+                <h3>📊 <span lang="en">PHASE 2: PROJECTS & MANAGEMENT</span><span lang="vi" style="display: none;">GIAI ĐOẠN 2: CÁC DỰ ÁN & QUẢN LÝ</span></h3>
+                <div class="phase-period">
+                    <span lang="en">Weeks 7-9 | Feb 23 - Mar 12, 2026</span>
+                    <span lang="vi" style="display: none;">Tuần 7-9 | 23 Tháng 2 - 12 Tháng 3, 2026</span>
+                </div>
+                <p style="margin-bottom: 15px; color: var(--color-text-light);">
+                    <strong><span lang="en">Focus:</span><span lang="vi" style="display: none;">Tập trung:</span></strong> <span lang="en">Apply requirements to different project types and manage changes</span><span lang="vi" style="display: none;">Áp dụng yêu cầu cho các loại dự án khác nhau và quản lý thay đổi</span>
+                </p>
+                <div>
+                    <strong style="color: var(--color-text);">
+                        <span lang="en">📚 Chapters 18-26:</span>
+                        <span lang="vi" style="display: none;">📚 Chương 18-26:</span>
+                    </strong>
+                    <ul class="modules-list">
+                        <li><span lang="en">Requirements Reuse & Patterns</span><span lang="vi" style="display: none;">Tái sử dụng & Mẫu Yêu cầu</span></li>
+                        <li><span lang="en">Agile & Traditional Approaches</span><span lang="vi" style="display: none;">Các Phương pháp Agile & Truyền thống</span></li>
+                        <li><span lang="en">Enhancement & Packaged Software</span><span lang="vi" style="display: none;">Cải tiến & Phần mềm Đóng gói</span></li>
+                        <li><span lang="en">Outsourced Requirements</span><span lang="vi" style="display: none;">Yêu cầu Ngoài thầu</span></li>
+                        <li><span lang="en">Requirements Change Control</span><span lang="vi" style="display: none;">Kiểm soát Thay đổi Yêu cầu</span></li>
+                    </ul>
+                </div>
+                <div class="deliverables">
+                    <strong><span lang="en">✓ Deliverables:</span><span lang="vi" style="display: none;">✓ Yêu cầu giao:</span></strong><br>
+                    <span lang="en">Progress Test 2 • Assignment 1 (Part B) • Project Case Studies</span>
+                    <span lang="vi" style="display: none;">Kiểm tra Tiến độ 2 • Bài tập 1 (Phần B) • Nghiên cứu Trường hợp Dự án</span>
                 </div>
             </div>
-        </section>
+
+            <!-- Phase 3 -->
+            <div class="phase-card phase-3">
+                <h3>✅ <span lang="en">PHASE 3: REVIEW & MASTERY</span><span lang="vi" style="display: none;">GIAI ĐOẠN 3: ÔN TẬP & THÀNH THẠO</span></h3>
+                <div class="phase-period">
+                    <span lang="en">Weeks 10-11 | Mar 16-26, 2026</span>
+                    <span lang="vi" style="display: none;">Tuần 10-11 | 16-26 Tháng 3, 2026</span>
+                </div>
+                <p style="margin-bottom: 15px; color: var(--color-text-light);">
+                    <strong><span lang="en">Focus:</span><span lang="vi" style="display: none;">Tập trung:</span></strong> <span lang="en">Integrate all knowledge and prepare for final assessment</span><span lang="vi" style="display: none;">Tích hợp tất cả kiến thức và chuẩn bị đánh giá cuối cùng</span>
+                </p>
+                <div>
+                    <strong style="color: var(--color-text);">
+                        <span lang="en">📚 Chapters 27-32:</span>
+                        <span lang="vi" style="display: none;">📚 Chương 27-32:</span>
+                    </strong>
+                    <ul class="modules-list">
+                        <li><span lang="en">Requirements Management Processes</span><span lang="vi" style="display: none;">Quy trình Quản lý Yêu cầu</span></li>
+                        <li><span lang="en">Traceability Matrices & Tools</span><span lang="vi" style="display: none;">Ma trận Truy xuất & Công cụ</span></li>
+                        <li><span lang="en">Risk & Quality Management</span><span lang="vi" style="display: none;">Quản lý Rủi ro & Chất lượng</span></li>
+                        <li><span lang="en">Requirements Process Improvement</span><span lang="vi" style="display: none;">Cải tiến Quy trình Yêu cầu</span></li>
+                        <li><span lang="en">Comprehensive Review & Integration</span><span lang="vi" style="display: none;">Ôn tập Toàn diện & Tích hợp</span></li>
+                    </ul>
+                </div>
+                <div class="deliverables">
+                    <strong><span lang="en">✓ Deliverables:</span><span lang="vi" style="display: none;">✓ Yêu cầu giao:</span></strong><br>
+                    <span lang="en">Progress Test 3 • Assignment 2 • Final Exam</span>
+                    <span lang="vi" style="display: none;">Kiểm tra Tiến độ 3 • Bài tập 2 • Kỳ thi Cuối kỳ</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailed Timeline Table -->
+        <div style="margin-top: 40px; overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; background: var(--color-surface); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                <thead>
+                    <tr style="background: var(--color-primary); color: white;">
+                        <th style="padding: 15px; text-align: left;"><span lang="en">Week</span><span lang="vi" style="display: none;">Tuần</span></th>
+                        <th style="padding: 15px; text-align: left;"><span lang="en">Dates</span><span lang="vi" style="display: none;">Ngày</span></th>
+                        <th style="padding: 15px; text-align: left;"><span lang="en">Sessions</span><span lang="vi" style="display: none;">Buổi</span></th>
+                        <th style="padding: 15px; text-align: left;"><span lang="en">Phase</span><span lang="vi" style="display: none;">Giai đoạn</span></th>
+                        <th style="padding: 15px; text-align: left;"><span lang="en">Focus Areas</span><span lang="vi" style="display: none;">Trọng tâm</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid var(--color-border);">
+                        <td style="padding: 12px 15px;">1-5</td>
+                        <td style="padding: 12px 15px;">Jan 5 - Feb 5</td>
+                        <td style="padding: 12px 15px;">10</td>
+                        <td style="padding: 12px 15px;"><span style="background: rgba(52, 152, 219, 0.2); padding: 4px 8px; border-radius: 4px;"><span lang="en">Phase 1</span><span lang="vi" style="display: none;">Giai đoạn 1</span></span></td>
+                        <td style="padding: 12px 15px;"><span lang="en">Fundamentals, Elicitation, Documentation</span><span lang="vi" style="display: none;">Nền tảng, Thu thập, Tài liệu hóa</span></td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--color-border); background: #f9f9f9;">
+                        <td style="padding: 12px 15px;">6</td>
+                        <td style="padding: 12px 15px;">Feb 9-22</td>
+                        <td style="padding: 12px 15px;">-</td>
+                        <td style="padding: 12px 15px;"><span style="background: rgba(200, 200, 200, 0.2); padding: 4px 8px; border-radius: 4px;"><span lang="en">BREAK</span><span lang="vi" style="display: none;">NGHỈ</span></span></td>
+                        <td style="padding: 12px 15px;"><span lang="en">Lunar New Year Holiday</span><span lang="vi" style="display: none;">Kỳ nghỉ Tết Nguyên Đán</span></td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--color-border);">
+                        <td style="padding: 12px 15px;">7-9</td>
+                        <td style="padding: 12px 15px;">Feb 23 - Mar 12</td>
+                        <td style="padding: 12px 15px;">6</td>
+                        <td style="padding: 12px 15px;"><span style="background: rgba(46, 204, 113, 0.2); padding: 4px 8px; border-radius: 4px;"><span lang="en">Phase 2</span><span lang="vi" style="display: none;">Giai đoạn 2</span></span></td>
+                        <td style="padding: 12px 15px;"><span lang="en">Project Types, Change Management</span><span lang="vi" style="display: none;">Loại dự án, Quản lý Thay đổi</span></td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--color-border); background: #f9f9f9;">
+                        <td style="padding: 12px 15px;">10-11</td>
+                        <td style="padding: 12px 15px;">Mar 16-26</td>
+                        <td style="padding: 12px 15px;">4</td>
+                        <td style="padding: 12px 15px;"><span style="background: rgba(231, 76, 60, 0.2); padding: 4px 8px; border-radius: 4px;"><span lang="en">Phase 3</span><span lang="vi" style="display: none;">Giai đoạn 3</span></span></td>
+                        <td style="padding: 12px 15px;"><span lang="en">Integration, Review, Final Exam</span><span lang="vi" style="display: none;">Tích hợp, Ôn tập, Kỳ thi Cuối</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Timeline -->
+    <section>
+        <h2>⏱️ <span lang="en">Course Timeline</span><span lang="vi" style="display: none;">Lịch Trình Khóa Học</span></h2>
+        <div class="timeline">
+            <div class="timeline-item current">
+                <h4>📍 <span lang="en">PRE-COURSE</span><span lang="vi" style="display: none;">CHUẨN BỊ</span></h4>
+                <div class="date">Jan 1-4, 2026</div>
+                <p><span lang="en">Course preparation and setup</span><span lang="vi" style="display: none;">Chuẩn bị khóa học và thiết lập</span></p>
+            </div>
+            <div class="timeline-item">
+                <h4>🏗️ <span lang="en">PHASE 1: FOUNDATION</span><span lang="vi" style="display: none;">GIAI ĐOẠN 1: NỀN TẢNG</span></h4>
+                <div class="date">Jan 5 - Feb 5</div>
+                <p><span lang="en">Build fundamentals (5 weeks)</span><span lang="vi" style="display: none;">Xây dựng nền tảng (5 tuần)</span></p>
+            </div>
+            <div class="timeline-item">
+                <h4>🎄 <span lang="en">LUNAR NEW YEAR</span><span lang="vi" style="display: none;">TẾT NGUYÊN ĐÁN</span></h4>
+                <div class="date">Feb 9-22</div>
+                <p><span lang="en">Course break & rest</span><span lang="vi" style="display: none;">Nghỉ khóa học & nghỉ ngơi</span></p>
+            </div>
+            <div class="timeline-item">
+                <h4>📊 <span lang="en">PHASE 2: PROJECTS</span><span lang="vi" style="display: none;">GIAI ĐOẠN 2: DỰ ÁN</span></h4>
+                <div class="date">Feb 23 - Mar 12</div>
+                <p><span lang="en">Manage different project types (3 weeks)</span><span lang="vi" style="display: none;">Quản lý các loại dự án khác nhau (3 tuần)</span></p>
+            </div>
+            <div class="timeline-item">
+                <h4>✅ <span lang="en">PHASE 3: REVIEW</span><span lang="vi" style="display: none;">GIAI ĐOẠN 3: ÔN TẬP</span></h4>
+                <div class="date">Mar 16-26</div>
+                <p><span lang="en">Integration & mastery (2 weeks)</span><span lang="vi" style="display: none;">Tích hợp & thành thạo (2 tuần)</span></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources -->
+    <section id="resources">
+        <h2>📚 <span lang="en">Course Resources</span><span lang="vi" style="display: none;">Tài Liệu Khóa Học</span></h2>
         
-        <!-- Overview & Objectives Section -->
-        <section id="overview" class="py-16">
-            <div class="container mx-auto px-4">
-                <div class="text-center">
-                    <h2 class="section-title">Tổng Quan Môn Học</h2>
-                    <p class="section-subtitle">Hiểu rõ TẠI SAO cần Kỹ thuật Yêu cầu và sẽ học được GÌ.</p>
-                </div>
-                
-                <div class="grid md:grid-cols-2 gap-12 items-start">
-                    <div>
-                        <h3 class="text-2xl font-bold text-slate-800 mb-4">Mô tả môn học (WHAT)</h3>
-                        <p class="text-slate-600 mb-4 leading-relaxed">
-                            Môn học này là một giới thiệu toàn diện về Kỹ thuật Yêu cầu (RE), cung cấp kiến thức nền tảng và các thuật ngữ chuyên ngành. Sinh viên sẽ được trang bị các kỹ thuật thiết yếu từ khơi gợi, phân tích, đặc tả cho đến đảm bảo chất lượng yêu cầu.
-                        </p>
-                        <p class="text-slate-600 mb-4 leading-relaxed">
-                           Bạn sẽ học cách làm việc với khách hàng, tài liệu hóa các loại yêu cầu khác nhau (người dùng, nghiệp vụ, chức năng, phi chức năng) và sử dụng các mô hình trực quan để minh họa chúng một cách hiệu quả.
-                        </p>
-                    </div>
-                    <div>
-                        <h3 class="text-2xl font-bold text-slate-800 mb-4">Tại sao Kỹ thuật Yêu cầu quan trọng? (WHY)</h3>
-                        <ul class="space-y-4">
-                            <li class="flex items-start">
-                                <svg class="h-6 w-6 text-green-500 mr-3 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                <div>
-                                    <h4 class="font-semibold text-slate-700">Giảm rủi ro dự án</h4>
-                                    <p class="text-slate-600">Phát hiện sớm các vấn đề về yêu cầu giúp tiết kiệm chi phí sửa lỗi gấp nhiều lần so với sau khi triển khai.</p>
-                                </div>
-                            </li>
-                            <li class="flex items-start">
-                                <svg class="h-6 w-6 text-green-500 mr-3 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                <div>
-                                    <h4 class="font-semibold text-slate-700">Đảm bảo sản phẩm đúng nhu cầu</h4>
-                                    <p class="text-slate-600">Xây dựng sản phẩm thực sự giải quyết được vấn đề kinh doanh và làm hài lòng người dùng.</p>
-                                </div>
-                            </li>
-                             <li class="flex items-start">
-                                <svg class="h-6 w-6 text-green-500 mr-3 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                <div>
-                                    <h4 class="font-semibold text-slate-700">Nâng cao chất lượng phần mềm</h4>
-                                    <p class="text-slate-600">Quy trình yêu cầu tốt là nền tảng cho việc lập kế hoạch, thiết kế, và phát triển sản phẩm chất lượng cao.</p>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+        <div class="resource-cards">
+            <div class="resource-card">
+                <h3>📖 <span lang="en">Textbook</span><span lang="vi" style="display: none;">Sách Giáo Khoa</span></h3>
+                <p><span lang="en">Software Requirements (3rd Edition)</span><span lang="vi" style="display: none;">Đặc tả Yêu cầu Phần mềm (Phiên bản 3)</span></p>
+                <p style="font-size: 12px; margin-bottom: 15px;"><span lang="en">by Karl E. Wiegers</span><span lang="vi" style="display: none;">của Karl E. Wiegers</span></p>
+                <p style="font-size: 12px;"><span lang="en">ISBN: 978-0-7356-7966-5</span></p>
+            </div>
+            <div class="resource-card">
+                <h3>🎓 <span lang="en">LMS Portal</span><span lang="vi" style="display: none;">Cổng thông tin LMS</span></h3>
+                <p><span lang="en">Access course materials and submit assignments</span><span lang="vi" style="display: none;">Truy cập tài liệu khóa học và nộp bài tập</span></p>
+                <a href="https://lms-hcm.fpt.edu.vn/" target="_blank"><span lang="en">Visit LMS →</span><span lang="vi" style="display: none;">Truy cập LMS →</span></a>
+            </div>
+            <div class="resource-card">
+                <h3>💻 <span lang="en">GitHub Repository</span><span lang="vi" style="display: none;">Kho Lưu Trữ GitHub</span></h3>
+                <p><span lang="en">Templates and code examples</span><span lang="vi" style="display: none;">Mẫu và ví dụ mã nguồn</span></p>
+                <a href="https://github.com/doit-now/software-requirements" target="_blank"><span lang="en">View Repo →</span><span lang="vi" style="display: none;">Xem Repo →</span></a>
+            </div>
+            <div class="resource-card">
+                <h3>📧 <span lang="en">Contact</span><span lang="vi" style="display: none;">Liên Hệ</span></h3>
+                <p><strong><span lang="en">Instructor:</span><span lang="vi" style="display: none;">Giảng viên:</span></strong> TrungDVQ2</p>
+                <p><strong><span lang="en">Room:</span><span lang="vi" style="display: none;">Phòng:</span></strong> NVH 606</p>
+            </div>
+            <div class="resource-card">
+                <h3>📍 <span lang="en">Class Info</span><span lang="vi" style="display: none;">Thông Tin Lớp</span></h3>
+                <p><strong><span lang="en">Schedule:</span><span lang="vi" style="display: none;">Lịch:</span></strong> <span lang="en">Mon & Thu</span><span lang="vi" style="display: none;">Thứ 2 & Thứ 5</span></p>
+                <p><strong><span lang="en">Time:</span><span lang="vi" style="display: none;">Thời gian:</span></strong> <span lang="en">Slot 1 (90 min)</span><span lang="vi" style="display: none;">Buổi 1 (90 phút)</span></p>
+            </div>
 
-                <div class="mt-16">
-                    <h3 class="text-2xl font-bold text-slate-800 mb-6 text-center">Kết quả học tập (CLOs)</h3>
-                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <div class="card"><strong>CLO1:</strong> Hiểu rõ nguyên tắc và kỹ thuật của RE.</div>
-                        <div class="card"><strong>CLO4:</strong> Phân tích và tạo ra đặc tả hệ thống.</div>
-                        <div class="card"><strong>CLO5:</strong> Tạo các mô hình yêu cầu (domain, use-case).</div>
-                        <div class="card"><strong>CLO6:</strong> Thiết kế và lập kế hoạch giải pháp hướng đối tượng.</div>
-                        <div class="card"><strong>CLO7:</strong> Chuẩn bị và trình bày báo cáo kỹ thuật.</div>
-                        <div class="card"><strong>CLO8 & 9:</strong> Giảm rủi ro bằng prototyping và quản lý yêu cầu.</div>
-                    </div>
+            <!-- Video Card - Full Width at End -->
+            <div class="resource-card video-card">
+                <h3 style="text-align: center; margin-bottom: 20px;">🎬 <span lang="en">Course Introduction Video</span><span lang="vi" style="display: none;">Video Giới thiệu Khóa Học</span></h3>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/IEThoJhG24I" allowfullscreen="" loading="lazy" title="SWR302 Course Introduction"></iframe>
                 </div>
             </div>
-        </section>
-
-        <!-- Course Roadmap -->
-        <section id="roadmap" class="py-16 bg-white">
-            <div class="container mx-auto px-4">
-                <div class="text-center">
-                    <h2 class="section-title">Lộ Trình Môn Học</h2>
-                    <p class="section-subtitle">Hành trình 10 tuần chinh phục Kỹ thuật Yêu cầu phần mềm.</p>
-                </div>
-                
-                <div class="max-w-4xl mx-auto">
-                    <!-- Timeline Start -->
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <p class="text-sm text-slate-500 font-medium">Tuần 1-2 (09/09 - 19/09)</p>
-                        <h4 class="font-bold text-slate-700 mt-1">Nền tảng và Khái niệm cốt lõi</h4>
-                        <p class="text-slate-600 mt-2">Giới thiệu môn học, yêu cầu thiết yếu, góc nhìn khách hàng và vai trò của Business Analyst (BA).</p>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <p class="text-sm text-slate-500 font-medium">Tuần 3-4 (23/09 - 03/10)</p>
-                        <h4 class="font-bold text-slate-700 mt-1">Khơi gợi và Hiểu yêu cầu</h4>
-                        <p class="text-slate-600 mt-2">Xác định yêu cầu nghiệp vụ (Vision & Scope), tìm kiếm tiếng nói người dùng, các kỹ thuật khơi gợi, Use Cases và User Stories. <span class="font-semibold text-sky-600">Kiểm tra Tiến độ 1.</span></p>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <p class="text-sm text-slate-500 font-medium">Tuần 5-6 (07/10 - 17/10)</p>
-                        <h4 class="font-bold text-slate-700 mt-1">Tài liệu hóa và Mô hình hóa</h4>
-                        <p class="text-slate-600 mt-2">Quy tắc nghiệp vụ, viết đặc tả yêu cầu phần mềm (SRS), và các kỹ thuật mô hình hóa trực quan (Data Flow, Swimlane, State-transition...).</p>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <p class="text-sm text-slate-500 font-medium">Tuần 7-8 (21/10 - 31/10)</p>
-                        <h4 class="font-bold text-slate-700 mt-1">Đảm bảo chất lượng và Rủi ro</h4>
-                        <p class="text-slate-600 mt-2">Yêu cầu phi chức năng, giảm thiểu rủi ro qua Prototyping, ưu tiên và xác nhận yêu cầu. <span class="font-semibold text-sky-600">Trình bày LAB & Kiểm tra Tiến độ 2.</span></p>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <p class="text-sm text-slate-500 font-medium">Tuần 9-10 (04/11 - 13/11)</p>
-                        <h4 class="font-bold text-slate-700 mt-1">Quản lý và Áp dụng thực tế</h4>
-                        <p class="text-slate-600 mt-2">Áp dụng RE trong các dự án (Agile, thuê ngoài...), quản lý sự thay đổi, truy vết yêu cầu và ôn tập cuối kỳ. <span class="font-semibold text-sky-600">Kiểm tra Tiến độ 3.</span></p>
-                    </div>
-                    <!-- Timeline End -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Assessment Section -->
-        <section id="assessment" class="py-16">
-            <div class="container mx-auto px-4">
-                <div class="text-center">
-                    <h2 class="section-title">Đánh Giá & Thang Điểm</h2>
-                    <p class="section-subtitle">Cách bạn sẽ được đánh giá trong suốt môn học.</p>
-                </div>
-
-                <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
-                    <div class="card lg:col-span-2">
-                        <h4 class="font-bold text-lg text-slate-800">Bài tập lớn (Assignment)</h4>
-                        <p class="text-3xl font-extrabold text-sky-500 mt-2">20%</p>
-                        <p class="text-slate-500 mt-2">Thực hành toàn bộ quy trình RE qua một dự án thực tế.</p>
-                    </div>
-                     <div class="card">
-                        <h4 class="font-bold text-lg text-slate-800">Bài tập LAB</h4>
-                        <p class="text-3xl font-extrabold text-sky-500 mt-2">10%</p>
-                        <p class="text-slate-500 mt-2">Vẽ các sơ đồ và trình bày vào tuần 7.</p>
-                    </div>
-                    <div class="card lg:col-span-2">
-                        <h4 class="font-bold text-lg text-slate-800">Kiểm tra Tiến độ</h4>
-                        <p class="text-3xl font-extrabold text-sky-500 mt-2">20%</p>
-                        <p class="text-slate-500 mt-2">3 bài kiểm tra trắc nghiệm xuyên suốt quá trình học.</p>
-                    </div>
-                    <div class="card lg:col-span-5 grid md:grid-cols-2 gap-6 bg-slate-800 text-white p-8">
-                        <div>
-                           <h4 class="font-bold text-lg">Thi Thực hành cuối kỳ (PE)</h4>
-                           <p class="text-3xl font-extrabold text-sky-400 mt-2">25%</p>
-                           <p class="text-slate-300 mt-2">90 phút, dựa trên bài tập lớn hoặc các dự án đã học.</p>
-                        </div>
-                        <div>
-                           <h4 class="font-bold text-lg">Thi Lý thuyết cuối kỳ (TE)</h4>
-                           <p class="text-3xl font-extrabold text-sky-400 mt-2">25%</p>
-                           <p class="text-slate-300 mt-2">Kiến thức toàn bộ môn học.</p>
-                        </div>
-                    </div>
-                </div>
-                <p class="text-center mt-8 text-slate-600 font-medium">Điều kiện qua môn: Điểm trung bình tối thiểu là 5.</p>
-            </div>
-        </section>
-
-        <!-- Resources & Tools -->
-        <section id="resources" class="py-16 bg-white">
-            <div class="container mx-auto px-4">
-                <div class="text-center">
-                    <h2 class="section-title">Tài Liệu & Công Cụ</h2>
-                    <p class="section-subtitle">Những nguồn tài nguyên cần thiết cho môn học.</p>
-                </div>
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="card">
-                        <h4 class="font-bold text-lg text-slate-800 mb-2">Sách giáo trình</h4>
-                        <p class="text-slate-600">"Software Requirements, Third Edition" của Karl E. Wiegers và Joy Beatty.</p>
-                    </div>
-                    <div class="card">
-                        <h4 class="font-bold text-lg text-slate-800 mb-2">Tài liệu bổ sung</h4>
-                        <p class="text-slate-600">Slides bài giảng, các biểu mẫu (templates) và tài liệu tham khảo khác sẽ được cung cấp trên LMS.</p>
-                       
-                         <p class="text-slate-600 mt-2">Email: <a href=" https://github.com/doit-now/software-requirements" class="text-sky-500 hover:underline">Tài liệu trên git</a></p>
-                    </div>
-                    <div class="card md:col-span-2 lg:col-span-1">
-                        <h4 class="font-bold text-lg text-slate-800 mb-2">Công cụ phần mềm</h4>
-                        <ul class="list-disc list-inside text-slate-600 space-y-1">
-                            <li>Microsoft Office</li>
-                            <li>Visual Paradigm (Vẽ UML)</li>
-                        </ul>
-                    </div>
-                    <div class="card md:col-span-2 lg:col-span-3">
-                        <h4 class="font-bold text-lg text-slate-800 mb-4">Video Tham Khảo</h4>
-                        <div class="aspect-video">
-                           <iframe class="w-full h-full rounded-lg" src="https://www.youtube.com/embed/IEThoJhG24I?si=NzhoA-mg_EB9K3b-" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact -->
-        <section id="contact" class="py-16">
-            <div class="container mx-auto px-4 text-center">
-                 <h2 class="section-title">Liên Hệ & Hỗ Trợ</h2>
-                 <p class="section-subtitle">Đừng ngần ngại liên hệ khi bạn cần trợ giúp.</p>
-                 <div class="card max-w-lg mx-auto">
-                    <h3 class="text-xl font-bold text-slate-800">Đinh Vũ Quốc Trung</h3>
-                    <p class="text-slate-600 mt-2">Email: <a href="mailto:[Trungdvq2@fpt.edu.vn]" class="text-sky-500 hover:underline">Trungdvq2@fpt.edu.vn</a></p>
-                    <p class="text-slate-600 mt-1">Zalo lớp: https://zalo.me/g/saxjpr417</p>
-                    <p class="mt-4 text-sm text-slate-500">Mọi thông tin chi tiết và tài liệu sẽ được cập nhật trên <a href="https://flm.fpt.edu.vn/" target="_blank" class="font-semibold text-sky-500 hover:underline">flm.fpt.edu.vn</a></p>
-                 </div>
-            </div>
-        </section>
-    </main>
+        </div>
+    </section>
 
     <!-- Footer -->
-    <footer class="bg-slate-800 text-slate-400 py-8">
-        <div class="container mx-auto px-4 text-center text-sm">
-            <p>&copy; [Học kỳ hiện tại] - Môn học SWR302: Yêu cầu phần mềm.</p>
-            <p>Trang web này được tạo ra nhằm mục đích cung cấp thông tin cho sinh viên.</p>
-        </div>
+    <footer>
+        <p><strong>SWR302: Software Requirements</strong></p>
+        <p>FPT University | Course Code: SWR302 | 3 Credits</p>
+        <p>Duration: 11 weeks | 20 sessions | January 5 - March 26, 2026</p>
+        <p style="margin-top: 20px; font-size: 12px; opacity: 0.8;">Last Updated: January 4, 2026 | Status: ✅ Ready to Launch</p>
     </footer>
 
     <script>
-        // Smooth scroll for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+        // Language switching function
+        function changeLanguage(lang) {
+            localStorage.setItem('swr302Language', lang);
+            
+            const elements = document.querySelectorAll('[lang]');
+            elements.forEach(el => {
+                if (el.getAttribute('lang') === lang) {
+                    el.style.display = '';
+                } else {
+                    el.style.display = 'none';
+                }
             });
+        }
+
+        // Load saved language preference on page load
+        window.addEventListener('load', function() {
+            const savedLang = localStorage.getItem('swr302Language') || 'en';
+            document.getElementById('languageSelect').value = savedLang;
+            changeLanguage(savedLang);
+
+            const progressFill = document.querySelector('.progress-fill');
+            if (progressFill) {
+                progressFill.style.width = '0%';
+            }
         });
+
+        function scrollTo(section) {
+            const element = document.getElementById(section);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
     </script>
 </body>
 </html>
